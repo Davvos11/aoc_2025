@@ -1,8 +1,9 @@
 
-## Setup template and download puzzle data
+## Setup template
 
+Copy template for a particular day (for example day 1);
 ```shell
-cargo run --release -- 1 --download
+cargo run --release -- 1 --template
 ```
 
 Note, doing this out of order is not supported.
@@ -17,6 +18,9 @@ cargo test test01 --release
 ```
 
 ## Run actual puzzle
+
+Tries to download the puzzle input if it does not exist yet in the `puzzles` folder.
+Make sure to copy the AoC session cookie to `.env`.
 
 ```shell
 cargo run --release -- 1

@@ -1,11 +1,15 @@
 use crate::day::days;
 use clap::Parser;
+use dotenv::dotenv;
 use regex::Regex;
+use reqwest::blocking::Client;
+use reqwest::header::{COOKIE, USER_AGENT};
+use std::error::Error;
 use std::fs::OpenOptions;
 use std::io::Write;
 use std::path::Path;
 use std::time::Instant;
-use std::{fs, io};
+use std::{env, fs, io};
 
 pub mod day;
 #[cfg(test)]
@@ -17,20 +21,29 @@ struct Cli {
     day: usize,
     /// Set up template and download puzzle for this day
     #[arg(long, default_value_t = false)]
-    download: bool,
+    template: bool,
 }
 
 fn main() {
     let args = Cli::parse();
+    load_dot_env().expect("Failed to load .env");
 
-    if args.download {
+    if args.template {
         copy_templates(args.day).expect("Failed to copy templates");
     } else {
         let days = days();
         if let Some(constructor) = days.get(args.day - 1) {
             let puzzle_file = format!("puzzles/day{:02}.txt", args.day);
             if !file_exists(&puzzle_file) {
-                eprintln!("{puzzle_file} does not exist, downloading...")
+                eprintln!("{puzzle_file} does not exist, downloading...");
+                if let Ok(session) = env::var("AOC_SESSION")
+                    && !session.is_empty()
+                {
+                    download_puzzle(2025, args.day, &session).expect("Failed to download puzzle");
+                } else {
+                    eprintln!("Please set AOC_SESSION in .env");
+                    return;
+                }
             }
             let puzzle_input =
                 fs::read_to_string(&puzzle_file).expect("Failed to read puzzle input");
@@ -44,7 +57,7 @@ fn main() {
             println!("Part 2: {}\nTook {:3.2?}", part2, t.elapsed());
         } else {
             eprintln!(
-                "Day {} not found, run using --download to add this day",
+                "Day {} not found, run using --template to add this day",
                 args.day
             );
         }
@@ -124,5 +137,33 @@ fn add_line(file: &str, regex: &str, new_line: &str) -> io::Result<()> {
     lines.insert(insert_index, new_line.into());
 
     fs::write(file, lines.join("\n"))?;
+    Ok(())
+}
+
+fn load_dot_env() -> Result<(), Box<dyn Error>> {
+    if !file_exists(".env") {
+        fs::copy(".env.dist", ".env")?;
+    }
+    dotenv()?;
+
+    Ok(())
+}
+
+fn download_puzzle(year: usize, day: usize, session_cookie: &str) -> Result<(), Box<dyn Error>> {
+    let url = format!("https://adventofcode.com/{}/day/{}/input", year, day);
+
+    let client = Client::new();
+    let response = client
+        .get(&url)
+        .header(USER_AGENT, "github.com/yourname/aoc-downloader")
+        .header(COOKIE, format!("session={}", session_cookie))
+        .send()?;
+
+    response.error_for_status_ref()?;
+
+    let contents = response.text()?;
+    let file = format!("puzzles/day{day:02}.txt");
+    fs::write(file, contents)?;
+
     Ok(())
 }
