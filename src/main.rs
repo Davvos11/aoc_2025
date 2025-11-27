@@ -21,30 +21,22 @@ struct Cli {
     day: usize,
     /// Set up template and download puzzle for this day
     #[arg(long, default_value_t = false)]
-    template: bool,
+    download: bool,
 }
 
 fn main() {
     let args = Cli::parse();
     load_dot_env().expect("Failed to load .env");
 
-    if args.template {
+    let puzzle_file = format!("puzzles/day{:02}.txt", args.day);
+
+    if args.download {
         copy_templates(args.day).expect("Failed to copy templates");
+        check_puzzle_file(&puzzle_file, args.day);
     } else {
         let days = days();
         if let Some(constructor) = days.get(args.day - 1) {
-            let puzzle_file = format!("puzzles/day{:02}.txt", args.day);
-            if !file_exists(&puzzle_file) {
-                eprintln!("{puzzle_file} does not exist, downloading...");
-                if let Ok(session) = env::var("AOC_SESSION")
-                    && !session.is_empty()
-                {
-                    download_puzzle(2025, args.day, &session).expect("Failed to download puzzle");
-                } else {
-                    eprintln!("Please set AOC_SESSION in .env");
-                    return;
-                }
-            }
+            check_puzzle_file(&puzzle_file, args.day);
             let puzzle_input =
                 fs::read_to_string(&puzzle_file).expect("Failed to read puzzle input");
             let day = constructor(puzzle_input);
@@ -57,9 +49,22 @@ fn main() {
             println!("Part 2: {}\nTook {:3.2?}", part2, t.elapsed());
         } else {
             eprintln!(
-                "Day {} not found, run using --template to add this day",
+                "Day {} not found, run using --download to add this day",
                 args.day
             );
+        }
+    }
+}
+
+fn check_puzzle_file(file: &str, day: usize) {
+    if !file_exists(file) {
+        eprintln!("{file} does not exist, downloading...");
+        if let Ok(session) = env::var("AOC_SESSION")
+            && !session.is_empty()
+        {
+            download_puzzle(2025, day, &session).expect("Failed to download puzzle");
+        } else {
+            panic!("Please set AOC_SESSION in .env");
         }
     }
 }

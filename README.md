@@ -1,9 +1,9 @@
 
 ## Setup template
 
-Copy template for a particular day (for example day 1);
+Copy template for a particular day (for example day 1), and download puzzle file:
 ```shell
-cargo run --release -- 1 --template
+cargo run --release -- 1 --download
 ```
 
 Note, doing this out of order is not supported.
