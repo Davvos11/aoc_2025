@@ -160,7 +160,7 @@ fn download_puzzle(year: usize, day: usize, session_cookie: &str) -> Result<(), 
     let client = Client::new();
     let response = client
         .get(&url)
-        .header(USER_AGENT, "github.com/yourname/aoc-downloader")
+        .header(USER_AGENT, "https://github.com/Davvos11/aoc_2025/")
         .header(COOKIE, format!("session={}", session_cookie))
         .send()?;
 
