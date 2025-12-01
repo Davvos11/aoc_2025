@@ -13,6 +13,15 @@ fn part2(input: &str, expected: &str) {
 
 #[test]
 fn day01_part1_01() {
-    let input = "";
-    part1(input, "")
+    let input = "L68
+L30
+R48
+L5
+R60
+L55
+L1
+L99
+R14
+L82";
+    part1(input, "3")
 }
