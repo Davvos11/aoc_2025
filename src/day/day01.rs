@@ -22,7 +22,26 @@ impl Day for Day01 {
         count.to_string()
     }
     fn part2(&self) -> String {
-        todo!()
+        let numbers = self.input.lines().map(|l| rotation_to_number(l.trim()));
+        let mut current = 50;
+        let mut count = 0;
+        for number in numbers {
+            let new = current + number;
+            let rotations = new as f64 / 100.;
+            let mut zeroes = if rotations <= 0. {
+                (rotations - 0.01).floor().abs() as u64
+            } else if rotations >= 1. {
+                rotations.floor() as u64
+            } else {
+                0
+            };
+            if new < 0 && zeroes > 0 && current == 0 {
+                zeroes -= 1;
+            }
+            count += zeroes;
+            current = new.rem_euclid(100);
+        }
+        count.to_string()
     }
 }
 
