@@ -21,7 +21,19 @@ impl Day for Day02 {
         format!("{result}")
     }
     fn part2(&self) -> String {
-        todo!()
+        let result = self
+            .input
+            .trim()
+            .split(',')
+            .map(string_to_range)
+            .map(|range| {
+                range
+                    .into_iter()
+                    .filter(is_repeating_multiple)
+                    .sum::<usize>()
+            })
+            .sum::<usize>();
+        format!("{result}")
     }
 }
 
@@ -39,4 +51,29 @@ fn is_repeating(input: &usize) -> bool {
     let first = input / divisor;
     let second = input % divisor;
     first == second
+}
+
+fn is_repeating_multiple(input: &usize) -> bool {
+    let digits = input.ilog10() + 1;
+    'a: for size in 1..digits {
+        if !digits.is_multiple_of(size) {
+            continue;
+        }
+
+        let mut current = *input;
+        let mut previous = None;
+        for set in (0..(digits / size)).rev() {
+            let divisor = 10_usize.pow(set * size);
+            let new = current / divisor;
+            if let Some(previous) = previous
+                && new != previous
+            {
+                continue 'a;
+            }
+            previous = Some(new);
+            current = current % divisor;
+        }
+        return true;
+    }
+    false
 }
