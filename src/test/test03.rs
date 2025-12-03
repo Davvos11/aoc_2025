@@ -64,3 +64,15 @@ fn day03_part2_03() {
     let input = "811111111111119";
     part2(input, "811111111119")
 }
+#[test]
+fn day03_part2_04() {
+    let input = "234234234234278";
+    part2(input, "434234234278")
+}
+
+#[test]
+fn day03_part2_05() {
+    let input = "818181911112111";
+    part2(input, "888911112111")
+}
+

@@ -36,16 +36,16 @@ fn find_joltage(batteries: &[u64], current: u64, digits: usize) -> u64 {
     let mut max = 0;
     let mut max_i = 0;
     let candidates = &batteries[0..(batteries.len() - digits + 1)];
-    for (i, battery) in candidates.iter().enumerate() {
-        let candidate = current * 10 + battery;
-        if candidate > max {
-            max = candidate;
+    for (i, &battery) in candidates.iter().enumerate() {
+        if battery > max {
+            max = battery;
             max_i = i;
         }
     }
+    let new = current * 10 + max;
     if batteries.len() > 1 && digits > 1 {
-        find_joltage(&batteries[max_i + 1..], max, digits - 1)
+        find_joltage(&batteries[max_i + 1..], new, digits - 1)
     } else {
-        max
+        new
     }
 }
