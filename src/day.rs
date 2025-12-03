@@ -11,9 +11,10 @@ pub trait Day {
 
 pub type DayConstructor = fn(String) -> Box<dyn Day>;
 
+#[rustfmt::skip]
 pub fn days() -> Vec<DayConstructor> {
     vec![
         |input| Box::new(day01::Day01::new(input)),
         |input| Box::new(day02::Day02::new(input)),
     ]
-    }
+}
