@@ -36,7 +36,7 @@ where
     }
 }
 
-pub type DayConstructor = fn(String) -> Box<dyn PrintableDay + 'static>;
+pub type DayConstructor = fn(String) -> Box<dyn PrintableDay>;
 
 #[rustfmt::skip]
 pub fn days() -> Vec<DayConstructor> {
