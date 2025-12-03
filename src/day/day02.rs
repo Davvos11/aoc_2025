@@ -53,6 +53,7 @@ fn is_repeating(input: &usize) -> bool {
     first == second
 }
 
+#[allow(clippy::assign_op_pattern)]
 fn is_repeating_multiple(input: &usize) -> bool {
     let digits = input.ilog10() + 1;
     'a: for size in 1..digits {
