@@ -8,7 +8,6 @@ use std::error::Error;
 use std::fs::OpenOptions;
 use std::io::Write;
 use std::path::Path;
-use std::time::Instant;
 use std::{env, fs, io};
 
 pub mod day;
@@ -40,13 +39,7 @@ fn main() {
             let puzzle_input =
                 fs::read_to_string(&puzzle_file).expect("Failed to read puzzle input");
             let day = constructor(puzzle_input);
-
-            let t = Instant::now();
-            let part1 = day.part1();
-            println!("Part 1: {}\nTook {:3.2?}", part1, t.elapsed());
-            let t = Instant::now();
-            let part2 = day.part2();
-            println!("Part 2: {}\nTook {:3.2?}", part2, t.elapsed());
+            day.run();
         } else {
             eprintln!(
                 "Day {} not found, run using --download to add this day",

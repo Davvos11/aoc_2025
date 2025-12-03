@@ -1,12 +1,12 @@
 use crate::day::Day;
 use crate::day::day01::Day01;
 
-fn part1(input: &str, expected: &str) {
+fn part1(input: &str, expected: <Day01 as Day>::Part1) {
     let result = Day01::new(input.to_string()).part1();
     assert_eq!(result, expected, "Expected {}, got {}", expected, result)
 }
 
-fn part2(input: &str, expected: &str) {
+fn part2(input: &str, expected: <Day01 as Day>::Part2) {
     let result = Day01::new(input.to_string()).part2();
     assert_eq!(result, expected, "Expected {}, got {}", expected, result)
 }
@@ -23,7 +23,7 @@ L1
 L99
 R14
 L82";
-    part1(input, "3")
+    part1(input, 3)
 }
 
 #[test]
@@ -38,19 +38,19 @@ L1
 L99
 R14
 L82";
-    part2(input, "6")
+    part2(input, 6)
 }
 
 #[test]
 fn day01_part2_02() {
     let input = "R1000";
-    part2(input, "10")
+    part2(input, 10)
 }
 
 #[test]
 fn day01_part2_03() {
     let input = "L1000";
-    part2(input, "10")
+    part2(input, 10)
 }
 
 #[test]
@@ -63,7 +63,7 @@ L1";
     // 0 - 101 = -101 -> 99 (2)
     // 99 + 2 = 101 -> 1 (3)
     // 1 - 1 = 0 (4)
-    part2(input, "4")
+    part2(input, 4)
 }
 
 #[test]
@@ -76,5 +76,5 @@ R1";
     // 0 + 101 = 101 -> 1 (2)
     // 101 - 2 = 99 (3)
     // 99 + 1 = 100 -> 0 (4)
-    part2(input, "4")
+    part2(input, 4)
 }

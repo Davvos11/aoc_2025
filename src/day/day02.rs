@@ -6,23 +6,23 @@ pub struct Day02 {
 }
 
 impl Day for Day02 {
+    type Part1 = usize;
+    type Part2 = usize;
+
     fn new(input: String) -> Self {
         Self { input }
     }
 
-    fn part1(&self) -> String {
-        let result = self
-            .input
+    fn part1(&self) -> Self::Part1 {
+        self.input
             .trim()
             .split(',')
             .map(string_to_range)
             .map(|range| range.into_iter().filter(is_repeating).sum::<usize>())
-            .sum::<usize>();
-        format!("{result}")
+            .sum()
     }
-    fn part2(&self) -> String {
-        let result = self
-            .input
+    fn part2(&self) -> Self::Part2 {
+        self.input
             .trim()
             .split(',')
             .map(string_to_range)
@@ -32,8 +32,7 @@ impl Day for Day02 {
                     .filter(is_repeating_multiple)
                     .sum::<usize>()
             })
-            .sum::<usize>();
-        format!("{result}")
+            .sum()
     }
 }
 

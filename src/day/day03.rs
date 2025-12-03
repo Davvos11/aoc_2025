@@ -5,15 +5,18 @@ pub struct Day03 {
 }
 
 impl Day for Day03 {
+    type Part1 = u64;
+    type Part2 = u64;
+
     fn new(input: String) -> Self {
         Self { input }
     }
 
-    fn part1(&self) -> String {
-        self.solve(2).to_string()
+    fn part1(&self) -> Self::Part1 {
+        self.solve(2)
     }
-    fn part2(&self) -> String {
-        self.solve(12).to_string()
+    fn part2(&self) -> Self::Part2 {
+        self.solve(12)
     }
 }
 
@@ -28,7 +31,7 @@ impl Day03 {
                     .collect::<Vec<u64>>();
                 find_joltage(&batteries, 0, digits)
             })
-            .sum::<u64>()
+            .sum()
     }
 }
 

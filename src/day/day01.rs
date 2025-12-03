@@ -5,11 +5,14 @@ pub struct Day01 {
 }
 
 impl Day for Day01 {
+    type Part1 = u32;
+    type Part2 = u64;
+
     fn new(input: String) -> Self {
         Self { input }
     }
 
-    fn part1(&self) -> String {
+    fn part1(&self) -> Self::Part1 {
         let numbers = self.input.lines().map(|l| rotation_to_number(l.trim()));
         let mut current = 50;
         let mut count = 0;
@@ -19,9 +22,9 @@ impl Day for Day01 {
                 count += 1;
             }
         }
-        count.to_string()
+        count
     }
-    fn part2(&self) -> String {
+    fn part2(&self) -> Self::Part2 {
         let numbers = self.input.lines().map(|l| rotation_to_number(l.trim()));
         let mut current = 50;
         let mut count = 0;
@@ -41,7 +44,7 @@ impl Day for Day01 {
             count += zeroes;
             current = new.rem_euclid(100);
         }
-        count.to_string()
+        count
     }
 }
 
