@@ -1,5 +1,6 @@
 pub mod day01;
 pub mod day02;
+pub mod day03;
 
 pub trait Day {
     fn new(input: String) -> Self
@@ -16,5 +17,6 @@ pub fn days() -> Vec<DayConstructor> {
     vec![
         |input| Box::new(day01::Day01::new(input)),
         |input| Box::new(day02::Day02::new(input)),
+        |input| Box::new(day03::Day03::new(input)),
     ]
 }
