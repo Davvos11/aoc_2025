@@ -1,4 +1,3 @@
-use std::cmp::Ordering;
 use crate::day::Day;
 
 pub struct Day03 {
@@ -38,7 +37,8 @@ fn find_joltage(batteries: &[u64], current: u64, digits: usize) -> u64 {
     let (max_i, max) = candidates
         .iter()
         .enumerate()
-        .max_by(|&(_, a), &(_, b)| a.cmp(b).then(Ordering::Greater))
+        .rev()
+        .max_by_key(|&(_, battery)| battery)
         .unwrap();
     let new = current * 10 + max;
     if batteries.len() > 1 && digits > 1 {
