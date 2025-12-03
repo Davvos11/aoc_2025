@@ -10,43 +10,25 @@ impl Day for Day03 {
     }
 
     fn part1(&self) -> String {
-        let result = self
-            .input
-            .lines()
-            .map(|bank| {
-                let batteries = bank
-                    .chars()
-                    .map(|c| c.to_digit(10).unwrap())
-                    .collect::<Vec<u32>>();
-                let mut max = 0;
-                for i in 0..batteries.len() {
-                    for j in i + 1..batteries.len() {
-                        let candidate = batteries[i] * 10 + batteries[j];
-                        if candidate > max {
-                            max = candidate;
-                        }
-                    }
-                }
-                max
-            })
-            .sum::<u32>();
-
-        result.to_string()
+        self.solve(2).to_string()
     }
     fn part2(&self) -> String {
-        let result = self
-            .input
+        self.solve(12).to_string()
+    }
+}
+
+impl Day03 {
+    fn solve(&self, digits: usize) -> u64 {
+        self.input
             .lines()
             .map(|bank| {
                 let batteries = bank
                     .chars()
                     .map(|c| c.to_digit(10).unwrap() as u64)
                     .collect::<Vec<u64>>();
-                find_joltage(&batteries, 0, 12)
+                find_joltage(&batteries, 0, digits)
             })
-            .sum::<u64>();
-
-        result.to_string()
+            .sum::<u64>()
     }
 }
 
