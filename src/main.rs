@@ -39,7 +39,7 @@ fn main() {
             check_puzzle_file(&puzzle_file, args.day);
             let puzzle_input =
                 fs::read_to_string(&puzzle_file).expect("Failed to read puzzle input");
-            let day = constructor(puzzle_input);
+            let mut day = constructor(puzzle_input);
             day.run();
         } else {
             eprintln!(

@@ -21,6 +21,18 @@ impl<T: Debug> Grid<T> {
         self.content.get(y).and_then(|row| row.get(x))
     }
 
+    pub fn set(&mut self, x: usize, y: usize, value: T) {
+        if y >= self.content.len() {
+            return;
+        }
+        if x >= self.content[0].len() {
+            return;
+        }
+        if let Some(entry) = self.content.get_mut(y).and_then(|row| row.get_mut(x)) {
+            *entry = value;
+        }
+    }
+
     pub fn get_adjacent(&self, x: usize, y: usize) -> Vec<&T> {
         let mut result = Vec::new();
         let neighbors = [

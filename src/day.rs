@@ -13,12 +13,12 @@ pub trait Day {
     fn new(input: String) -> Self
     where
         Self: Sized;
-    fn part1(&self) -> Self::Part1;
-    fn part2(&self) -> Self::Part2;
+    fn part1(&mut self) -> Self::Part1;
+    fn part2(&mut self) -> Self::Part2;
 }
 
 pub trait PrintableDay {
-    fn run(&self);
+    fn run(&mut self);
 }
 
 impl<A, B, T> PrintableDay for T
@@ -27,7 +27,7 @@ where
     B: Display,
     T: Day<Part1 = A, Part2 = B>,
 {
-    fn run(&self) {
+    fn run(&mut self) {
         let t = Instant::now();
         let part1 = self.part1();
         println!("Part 1: {}\nTook {:3.2?}", part1, t.elapsed());

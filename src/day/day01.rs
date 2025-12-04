@@ -12,7 +12,7 @@ impl Day for Day01 {
         Self { input }
     }
 
-    fn part1(&self) -> Self::Part1 {
+    fn part1(&mut self) -> Self::Part1 {
         let numbers = self.input.lines().map(|l| rotation_to_number(l.trim()));
         let mut current = 50;
         let mut count = 0;
@@ -24,7 +24,7 @@ impl Day for Day01 {
         }
         count
     }
-    fn part2(&self) -> Self::Part2 {
+    fn part2(&mut self) -> Self::Part2 {
         let numbers = self.input.lines().map(|l| rotation_to_number(l.trim()));
         let mut current = 50;
         let mut count = 0;

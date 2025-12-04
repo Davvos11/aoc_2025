@@ -13,7 +13,7 @@ impl Day for Day02 {
         Self { input }
     }
 
-    fn part1(&self) -> Self::Part1 {
+    fn part1(&mut self) -> Self::Part1 {
         self.input
             .trim()
             .split(',')
@@ -21,7 +21,7 @@ impl Day for Day02 {
             .map(|range| range.into_iter().filter(is_repeating).sum::<usize>())
             .sum()
     }
-    fn part2(&self) -> Self::Part2 {
+    fn part2(&mut self) -> Self::Part2 {
         self.input
             .trim()
             .split(',')
