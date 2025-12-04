@@ -69,6 +69,7 @@ dependencies = [
  "dotenv",
  "regex",
  "reqwest",
+ "rustc-hash",
 ]
 
 [[package]]

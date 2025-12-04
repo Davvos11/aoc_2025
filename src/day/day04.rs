@@ -1,8 +1,10 @@
 use crate::day::Day;
 use crate::utils::grid::Grid;
+use crate::utils::grid_map::GridMap;
+use rustc_hash::FxHashMap;
 
 pub struct Day04 {
-    grid: Grid<char>,
+    grid: GridMap<char>,
 }
 
 impl Day for Day04 {
@@ -12,8 +14,11 @@ impl Day for Day04 {
     fn new(input: String) -> Self {
         let grid = input
             .lines()
-            .map(|line| line.chars().collect())
-            .collect::<Vec<Vec<_>>>()
+            .map(|line| line.chars())
+            .enumerate()
+            .flat_map(|(y, row)| row.enumerate().map(move |(x, val)| ((x, y), val)))
+            .filter(|&(_, val)| val == '@')
+            .collect::<FxHashMap<_, _>>()
             .into();
         Self { grid }
     }
@@ -26,7 +31,7 @@ impl Day for Day04 {
         loop {
             let removable = self.find_removable().collect::<Vec<_>>();
             for (x, y, _) in &removable {
-                self.grid.set(*x, *y, '.');
+                self.grid.remove(*x, *y);
             }
 
             let removed = removable.len();
@@ -45,10 +50,7 @@ impl Day04 {
             .filter(|(_, _, value)| *value == '@')
             .filter(|(x, y, _)| {
                 self.grid
-                    .get_adjacent(*x, *y)
-                    .iter()
-                    .filter(|value| **value == '@')
-                    .count()
+                    .get_adjacent(*x, *y).len()
                     < 4
             })
     }
