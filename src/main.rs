@@ -13,6 +13,7 @@ use std::{env, fs, io};
 pub mod day;
 #[cfg(test)]
 mod test;
+mod utils;
 
 #[derive(Parser)]
 struct Cli {

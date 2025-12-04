@@ -4,6 +4,7 @@ use std::time::Instant;
 pub mod day01;
 pub mod day02;
 pub mod day03;
+pub mod day04;
 
 pub trait Day {
     type Part1;
@@ -44,5 +45,6 @@ pub fn days() -> Vec<DayConstructor> {
         |input| Box::new(day01::Day01::new(input)),
         |input| Box::new(day02::Day02::new(input)),
         |input| Box::new(day03::Day03::new(input)),
+        |input| Box::new(day04::Day04::new(input)),
     ]
 }
