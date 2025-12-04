@@ -9,6 +9,7 @@ use std::fs::OpenOptions;
 use std::io::Write;
 use std::path::Path;
 use std::{env, fs, io};
+use std::time::Instant;
 
 pub mod day;
 #[cfg(test)]
@@ -39,7 +40,9 @@ fn main() {
             check_puzzle_file(&puzzle_file, args.day);
             let puzzle_input =
                 fs::read_to_string(&puzzle_file).expect("Failed to read puzzle input");
+            let t = Instant::now();
             let mut day = constructor(puzzle_input);
+            println!("Init took {:3.2?}", t.elapsed());
             day.run();
         } else {
             eprintln!(
