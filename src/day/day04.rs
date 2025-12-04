@@ -2,13 +2,12 @@ use crate::day::Day;
 use crate::utils::grid::Grid;
 
 pub struct Day04 {
-    input: String,
     grid: Grid<char>,
 }
 
 impl Day for Day04 {
     type Part1 = u64;
-    type Part2 = u64;
+    type Part2 = usize;
 
     fn new(input: String) -> Self {
         let grid = input
@@ -16,10 +15,31 @@ impl Day for Day04 {
             .map(|line| line.chars().collect())
             .collect::<Vec<Vec<_>>>()
             .into();
-        Self { input, grid }
+        Self { grid }
     }
 
-    fn part1(&self) -> Self::Part1 {
+    fn part1(&mut self) -> Self::Part1 {
+        self.find_removable().count() as u64
+    }
+    fn part2(&mut self) -> Self::Part2 {
+        let mut total = 0;
+        loop {
+            let removable = self.find_removable().collect::<Vec<_>>();
+            for (x, y, _) in &removable {
+                self.grid.set(*x, *y, '.');
+            }
+
+            let removed = removable.len();
+            total += removed;
+            if removed == 0 {
+                return total;
+            }
+        }
+    }
+}
+
+impl Day04 {
+    fn find_removable(&self) -> impl Iterator<Item = (usize, usize, char)> {
         self.grid
             .iterate()
             .filter(|(_, _, value)| **value == '@')
@@ -31,9 +51,6 @@ impl Day for Day04 {
                     .count()
                     < 4
             })
-            .count() as u64
-    }
-    fn part2(&self) -> Self::Part2 {
-        todo!()
+            .map(|(x, y, v)| (x, y, *v))
     }
 }
