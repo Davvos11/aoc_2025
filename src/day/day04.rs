@@ -42,15 +42,14 @@ impl Day04 {
     fn find_removable(&self) -> impl Iterator<Item = (usize, usize, char)> {
         self.grid
             .iterate()
-            .filter(|(_, _, value)| **value == '@')
+            .filter(|(_, _, value)| *value == '@')
             .filter(|(x, y, _)| {
                 self.grid
                     .get_adjacent(*x, *y)
                     .iter()
-                    .filter(|value| ***value == '@')
+                    .filter(|value| **value == '@')
                     .count()
                     < 4
             })
-            .map(|(x, y, v)| (x, y, *v))
     }
 }
