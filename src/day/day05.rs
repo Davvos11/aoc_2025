@@ -29,20 +29,17 @@ impl Day for Day05 {
     }
 
     fn part1(&mut self) -> Self::Part1 {
+        self.sort_ranges();
+        while self.merge_ranges() {
+            self.sort_ranges();
+        }
         self.ingredients
             .iter()
             .filter(|i| self.is_fresh(**i))
             .count()
     }
     fn part2(&mut self) -> Self::Part2 {
-        loop {
-            self.sort_ranges();
-            let (changed, merged_ranges) = merge_all(&self.ranges);
-            if !changed {
-                break;
-            }
-            self.ranges = merged_ranges;
-        }
+        // Note sorting and merging already done for part 1
         self.ranges.iter().map(|r| r.clone().count()).sum()
     }
 }
@@ -60,6 +57,14 @@ impl Day05 {
     fn sort_ranges(&mut self) {
         self.ranges
             .sort_by_key(|range| (*range.start(), *range.end()));
+    }
+
+    fn merge_ranges(&mut self) -> bool {
+        let (changed, merged_ranges) = merge_all(&self.ranges);
+        if changed {
+            self.ranges = merged_ranges;
+        }
+        changed
     }
 }
 
