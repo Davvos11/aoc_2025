@@ -1,5 +1,5 @@
 use crate::day::Day;
-use std::ops::RangeInclusive;
+use crate::utils::parse::string_to_range;
 
 pub struct Day02 {
     input: String,
@@ -36,13 +36,6 @@ impl Day for Day02 {
     }
 }
 
-fn string_to_range(input: &str) -> RangeInclusive<usize> {
-    let mut strings = input.split('-');
-    let start = strings.next().unwrap().parse().unwrap();
-    let end = strings.next().unwrap().parse().unwrap();
-
-    start..=end
-}
 
 fn is_repeating(input: &usize) -> bool {
     let digits = input.ilog10() + 1;
