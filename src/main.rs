@@ -8,8 +8,8 @@ use std::error::Error;
 use std::fs::OpenOptions;
 use std::io::Write;
 use std::path::Path;
-use std::{env, fs, io};
 use std::time::Instant;
+use std::{env, fs, io};
 
 pub mod day;
 #[cfg(test)]

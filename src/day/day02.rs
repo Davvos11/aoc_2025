@@ -36,7 +36,6 @@ impl Day for Day02 {
     }
 }
 
-
 fn is_repeating(input: &usize) -> bool {
     let digits = input.ilog10() + 1;
     let divisor = 10_usize.pow(digits / 2);

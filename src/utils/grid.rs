@@ -18,9 +18,7 @@ impl<T: Debug + Copy> Grid<T> {
         if x >= self.content[0].len() {
             return None;
         }
-        self.content
-            .get(y)
-            .and_then(|row| row.get(x).copied())
+        self.content.get(y).and_then(|row| row.get(x).copied())
     }
 
     pub fn set(&mut self, x: usize, y: usize, value: T) {
