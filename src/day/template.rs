@@ -12,10 +12,10 @@ impl Day for DayXX {
         Self { input }
     }
 
-    fn part1(&self) -> Self::Part1 {
+    fn part1(&mut self) -> Self::Part1 {
         todo!()
     }
-    fn part2(&self) -> Self::Part2 {
+    fn part2(&mut self) -> Self::Part2 {
         todo!()
     }
 }
