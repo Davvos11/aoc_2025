@@ -72,7 +72,7 @@ fn try_merge(
     a: &RangeInclusive<usize>,
     b: &RangeInclusive<usize>,
 ) -> Option<RangeInclusive<usize>> {
-    if *a.end() >= *b.start() -1 {
+    if *a.end() >= *b.start() - 1 {
         let end = usize::max(*a.end(), *b.end());
         Some(*a.start()..=end)
     } else {

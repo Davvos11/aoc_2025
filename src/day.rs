@@ -6,6 +6,7 @@ pub mod day02;
 pub mod day03;
 pub mod day04;
 pub mod day05;
+pub mod day06;
 
 pub trait Day {
     type Part1;
@@ -48,5 +49,6 @@ pub fn days() -> Vec<DayConstructor> {
         |input| Box::new(day03::Day03::new(input)),
         |input| Box::new(day04::Day04::new(input)),
         |input| Box::new(day05::Day05::new(input)),
+        |input| Box::new(day06::Day06::new(input)),
     ]
 }
